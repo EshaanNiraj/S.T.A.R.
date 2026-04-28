@@ -46,30 +46,55 @@ st.title("S.T.A.R.")
 st.subheader("Submillimetre Tool for Astrophysics Research")
 
 dataset = st.selectbox("Dataset", list(presets.keys()))
-p = presets[dataset]
 
-temperature = st.number_input(
-    "Dust Temperature (K)", value=p["temp"], key="temp"
-)
+if "initialised" not in st.session_state:
+    p = presets[dataset]
+    st.session_state.sz98_flux = p["sz98_flux"]
+    st.session_state.sz98_freq = p["sz98_freq"]
+    st.session_state.sz98_dist = p["sz98_dist"]
+    st.session_state.rylup_flux = p["rylup_flux"]
+    st.session_state.rylup_freq = p["rylup_freq"]
+    st.session_state.rylup_dist = p["rylup_dist"]
+    st.session_state.temp = p["temp"]
+    st.session_state.current_dataset = dataset
+    st.session_state.initialised = True
+
+if dataset != st.session_state.current_dataset:
+    p = presets[dataset]
+    st.session_state.sz98_flux = p["sz98_flux"]
+    st.session_state.sz98_freq = p["sz98_freq"]
+    st.session_state.sz98_dist = p["sz98_dist"]
+    st.session_state.rylup_flux = p["rylup_flux"]
+    st.session_state.rylup_freq = p["rylup_freq"]
+    st.session_state.rylup_dist = p["rylup_dist"]
+    st.session_state.temp = p["temp"]
+    st.session_state.current_dataset = dataset
+
+temperature = st.number_input("Dust Temperature (K)", key="temp")
 
 st.markdown("### Sz 98")
-sz98_flux = st.number_input("Flux (Jy)", value=p["sz98_flux"], key="sz98_flux")
-sz98_freq = st.number_input("Frequency (Hz)", value=p["sz98_freq"], key="sz98_freq")
-sz98_dist = st.number_input("Distance (pc)", value=p["sz98_dist"], key="sz98_dist")
+sz98_flux = st.number_input("Flux (Jy) — Sz 98", key="sz98_flux")
+sz98_freq = st.number_input("Frequency (Hz) — Sz 98", key="sz98_freq")
+sz98_dist = st.number_input("Distance (pc) — Sz 98", key="sz98_dist")
 
 st.markdown("### RY Lup")
-rylup_flux = st.number_input("Flux (Jy)", value=p["rylup_flux"], key="rylup_flux")
-rylup_freq = st.number_input("Frequency (Hz)", value=p["rylup_freq"], key="rylup_freq")
-rylup_dist = st.number_input("Distance (pc)", value=p["rylup_dist"], key="rylup_dist")
+rylup_flux = st.number_input("Flux (Jy) — RY Lup", key="rylup_flux")
+rylup_freq = st.number_input("Frequency (Hz) — RY Lup", key="rylup_freq")
+rylup_dist = st.number_input("Distance (pc) — RY Lup", key="rylup_dist")
 
 if st.button("Calculate Dust Mass"):
+
     sz98 = (mass(sz98_flux, sz98_freq, sz98_dist, temperature) * u.kg).to(u.M_earth)
     rylup = (mass(rylup_flux, rylup_freq, rylup_dist, temperature) * u.kg).to(u.M_earth)
+
     st.markdown("## Results")
+
     st.markdown("### Dust Mass")
     st.write(f"Sz 98: {sz98}")
     st.write(f"RY Lup: {rylup}")
+
     st.markdown("---")
+
     st.markdown("### Total Mass (Dust + Gas)")
     st.write(f"Sz 98: {(sz98 * 100).to(u.M_jup)}")
     st.write(f"RY Lup: {(rylup * 100).to(u.M_jup)}")
