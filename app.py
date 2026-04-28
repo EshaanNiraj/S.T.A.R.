@@ -48,17 +48,19 @@ st.subheader("Submillimetre Tool for Astrophysics Research")
 dataset = st.selectbox("Dataset", list(presets.keys()))
 p = presets[dataset]
 
-temperature = st.number_input("Dust Temperature (K)", value=p["temp"])
+temperature = st.number_input(
+    "Dust Temperature (K)", value=p["temp"], key="temp"
+)
 
 st.markdown("### Sz 98")
-sz98_flux = st.number_input("Flux (Jy)", value=p["sz98_flux"])
-sz98_freq = st.number_input("Frequency (Hz)", value=p["sz98_freq"])
-sz98_dist = st.number_input("Distance (pc)", value=p["sz98_dist"])
+sz98_flux = st.number_input("Flux (Jy)", value=p["sz98_flux"], key="sz98_flux")
+sz98_freq = st.number_input("Frequency (Hz)", value=p["sz98_freq"], key="sz98_freq")
+sz98_dist = st.number_input("Distance (pc)", value=p["sz98_dist"], key="sz98_dist")
 
 st.markdown("### RY Lup")
-rylup_flux = st.number_input("Flux (Jy)", value=p["rylup_flux"])
-rylup_freq = st.number_input("Frequency (Hz)", value=p["rylup_freq"])
-rylup_dist = st.number_input("Distance (pc)", value=p["rylup_dist"])
+rylup_flux = st.number_input("Flux (Jy)", value=p["rylup_flux"], key="rylup_flux")
+rylup_freq = st.number_input("Frequency (Hz)", value=p["rylup_freq"], key="rylup_freq")
+rylup_dist = st.number_input("Distance (pc)", value=p["rylup_dist"], key="rylup_dist")
 
 if st.button("Calculate Dust Mass"):
     sz98 = (mass(sz98_flux, sz98_freq, sz98_dist, temperature) * u.kg).to(u.M_earth)
