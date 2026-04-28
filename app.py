@@ -73,16 +73,16 @@ if dataset != st.session_state.current_dataset:
 temperature = st.number_input("Dust Temperature (K)", key="temp")
 
 st.markdown("### Sz 98")
-sz98_flux = st.number_input("Flux (Jy) — Sz 98", key="sz98_flux")
-sz98_freq = st.number_input("Frequency (Hz) — Sz 98", key="sz98_freq")
-sz98_dist = st.number_input("Distance (pc) — Sz 98", key="sz98_dist")
+sz98_flux = st.number_input("Flux (Jy)", key="sz98_flux")
+sz98_freq = st.number_input("Frequency (Hz)", key="sz98_freq")
+sz98_dist = st.number_input("Distance (pc)", key="sz98_dist")
 
 st.markdown("### RY Lup")
-rylup_flux = st.number_input("Flux (Jy) — RY Lup", key="rylup_flux")
-rylup_freq = st.number_input("Frequency (Hz) — RY Lup", key="rylup_freq")
-rylup_dist = st.number_input("Distance (pc) — RY Lup", key="rylup_dist")
+rylup_flux = st.number_input("Flux (Jy)", key="rylup_flux")
+rylup_freq = st.number_input("Frequency (Hz)", key="rylup_freq")
+rylup_dist = st.number_input("Distance (pc)", key="rylup_dist")
 
-if st.button("Calculate Dust Mass"):
+if st.button("Calculate Dust & Total Mass"):
 
     sz98 = (mass(sz98_flux, sz98_freq, sz98_dist, temperature) * u.kg).to(u.M_earth)
     rylup = (mass(rylup_flux, rylup_freq, rylup_dist, temperature) * u.kg).to(u.M_earth)
