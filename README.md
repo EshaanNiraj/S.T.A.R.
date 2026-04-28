@@ -1,4 +1,4 @@
-[![MIT License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=for-the-badge)](http://choosealicense.com/licenses/mit/)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)](http://choosealicense.com/licenses/mit/)
 
 # S.T.A.R. (Submillimetre Tool for Astrophysics Research)
 
