@@ -2,15 +2,15 @@
 
 # S.T.A.R. (Submillimetre Tool for Astrophysics Research)
 
-Interactive, intuitive GUI tool for quickly estimating both dust and total disc masses from ALMA datasets/observations - created as part of my Third Year Physics Project
+Interactive, intuitive GUI tool for quickly estimating both dust and total masses of protoplanetary discs from ALMA datasets/observations - created as part of my Third Year Physics Project.
 
 ## Live App
 [link](https://starapp.streamlit.app)
 
 ## Features
-- Dust mass estimation using Hildebrand with embedded Planck function
-- Gas-to-dust ratio scaling
+- Dust mass estimation using the Hildebrand Equation with embedded Planck function: $M_{\mathrm{dust}}=\frac{F_{\nu}d^{2}}{\kappa_{\nu}B_{\nu}(T_{\mathrm{dust}})}$
+- Gas-to-dust ratio scaling (100:1) to also calculate total disc mass
 - Built-in presets for ALMA data from wider literature
 
 ## Author
-Eshaan Niraj FRAS
+Eshaan Niraj
