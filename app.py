@@ -44,8 +44,9 @@ presets = {
 st.set_page_config(page_title="S.T.A.R.", layout="centered")
 st.title("S.T.A.R.")
 st.subheader("Submillimetre Tool for Astrophysics Research")
-
-dataset = st.selectbox("Dataset", list(presets.keys()))
+col1, col2 = st.columns(2)
+with col1:
+    dataset = st.selectbox("Dataset", list(presets.keys()))
 
 if "initialised" not in st.session_state:
     p = presets[dataset]
@@ -70,31 +71,36 @@ if dataset != st.session_state.current_dataset:
     st.session_state.temp = p["temp"]
     st.session_state.current_dataset = dataset
 
-temperature = st.number_input("Dust Temperature (K)", key="temp")
+with col2: 
+    temperature = st.number_input("Dust Temperature (K)", key="temp")
 
-st.markdown("### Sz 98")
-sz98_flux = st.number_input("Flux (Jy)", key="sz98_flux")
-sz98_freq = st.number_input("Frequency (Hz)", key="sz98_freq")
-sz98_dist = st.number_input("Distance (pc)", key="sz98_dist")
+with col1:
+    st.markdown("### Sz 98")
+    sz98_flux = st.number_input("Flux (Jy)", key="sz98_flux")
+    sz98_freq = st.number_input("Frequency (Hz)", key="sz98_freq")
+    sz98_dist = st.number_input("Distance (pc)", key="sz98_dist")
 
-st.markdown("### RY Lup")
-rylup_flux = st.number_input("Flux (Jy)", key="rylup_flux")
-rylup_freq = st.number_input("Frequency (Hz)", key="rylup_freq")
-rylup_dist = st.number_input("Distance (pc)", key="rylup_dist")
+with col2:
+    st.markdown("### RY Lup")
+    rylup_flux = st.number_input("Flux (Jy)", key="rylup_flux")
+    rylup_freq = st.number_input("Frequency (Hz)", key="rylup_freq")
+    rylup_dist = st.number_input("Distance (pc)", key="rylup_dist")
 
 if st.button("Calculate Dust & Total Mass"):
-
     sz98 = (mass(sz98_flux, sz98_freq, sz98_dist, temperature) * u.kg).to(u.M_earth)
     rylup = (mass(rylup_flux, rylup_freq, rylup_dist, temperature) * u.kg).to(u.M_earth)
-
     st.markdown("## Results")
+    newcol1, newcol2 = st.columns(2)
 
-    st.markdown("### Dust Mass")
-    st.write(f"Sz 98: {sz98}")
-    st.write(f"RY Lup: {rylup}")
+    with newcol1:
+        st.markdown("### Dust Mass")
+        st.write(f"Sz 98: {sz98}")
+        st.write(f"RY Lup: {rylup}")
+    
+    with newcol2:
+        st.markdown("### Total Mass (Dust + Gas)")
+        st.write(f"Sz 98: {(sz98 * 100).to(u.M_jup)}")
+        st.write(f"RY Lup: {(rylup * 100).to(u.M_jup)}")
 
-    st.markdown("---")
-
-    st.markdown("### Total Mass (Dust + Gas)")
-    st.write(f"Sz 98: {(sz98 * 100).to(u.M_jup)}")
-    st.write(f"RY Lup: {(rylup * 100).to(u.M_jup)}")
+st.markdown("---")
+st.markdown("###### © 2026 Eshaan Niraj")
